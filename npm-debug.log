@@ -1,0 +1,157 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish', '.' ]
+2 info using npm@3.3.12
+3 info using node@v5.2.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Users/zy/Desktop/ionic/cordova-plugin-rongcloud-im',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/zy/.npm/cordova-plugin-rongcloud-im/2.3.0/package.tgz not in flight; packing
+9 info lifecycle cordova-plugin-rongcloud-im@2.3.0~prepublish: cordova-plugin-rongcloud-im@2.3.0
+10 silly lifecycle cordova-plugin-rongcloud-im@2.3.0~prepublish: no script for prepublish, continuing
+11 verbose tar pack [ '/Users/zy/.npm/cordova-plugin-rongcloud-im/2.3.0/package.tgz',
+11 verbose tar pack   '/Users/zy/Desktop/ionic/cordova-plugin-rongcloud-im' ]
+12 verbose tarball /Users/zy/.npm/cordova-plugin-rongcloud-im/2.3.0/package.tgz
+13 verbose folder /Users/zy/Desktop/ionic/cordova-plugin-rongcloud-im
+14 verbose addLocalTarball adding from inside cache /Users/zy/.npm/cordova-plugin-rongcloud-im/2.3.0/package.tgz
+15 silly cache afterAdd cordova-plugin-rongcloud-im@2.3.0
+16 verbose afterAdd /Users/zy/.npm/cordova-plugin-rongcloud-im/2.3.0/package/package.json not in flight; writing
+17 verbose afterAdd /Users/zy/.npm/cordova-plugin-rongcloud-im/2.3.0/package/package.json written
+18 silly publish { name: 'cordova-plugin-rongcloud-im',
+18 silly publish   version: '2.3.0',
+18 silly publish   description: 'Cordova RongCloud IMLib Plugin',
+18 silly publish   cordova:
+18 silly publish    { id: 'cordova-plugin-rongcloud-im',
+18 silly publish      platforms: [ 'android', 'ios' ] },
+18 silly publish   repository:
+18 silly publish    { type: 'git',
+18 silly publish      url: 'git+https://github.com/rongcloud/cordova-plugin-rongcloud-im.git' },
+18 silly publish   keywords:
+18 silly publish    [ 'RongCloud',
+18 silly publish      'IM',
+18 silly publish      'ecosystem:cordova',
+18 silly publish      'cordova-android',
+18 silly publish      'cordova-ios' ],
+18 silly publish   engines: [ { name: 'cordova', version: '>=3.0' } ],
+18 silly publish   author: { name: 'RongCloud' },
+18 silly publish   license: 'Apache 2.0',
+18 silly publish   bugs: { url: 'https://github.com/rongcloud/cordova-plugin-rongcloud-im/issues' },
+18 silly publish   homepage: 'https://github.com/rongcloud/cordova-plugin-rongcloud-im#readme',
+18 silly publish   readme: '# cordova-plugin-rongcloud-im\nRongCloud IMLib Plugin for Cordova.\n',
+18 silly publish   readmeFilename: 'README.md',
+18 silly publish   gitHead: 'c203a8f7d19268b18b407970564feb3f41acf5ad',
+18 silly publish   _id: 'cordova-plugin-rongcloud-im@2.3.0',
+18 silly publish   scripts: {},
+18 silly publish   _shasum: '78d9241f7dfe1e72ccb7672e290f8dc5eb6e713a',
+18 silly publish   _from: '.' }
+19 verbose getPublishConfig undefined
+20 silly mapToRegistry name cordova-plugin-rongcloud-im
+21 silly mapToRegistry using default registry
+22 silly mapToRegistry registry https://registry.npmjs.org/
+23 silly mapToRegistry uri https://registry.npmjs.org/cordova-plugin-rongcloud-im
+24 verbose publish registryBase https://registry.npmjs.org/
+25 silly publish uploading /Users/zy/.npm/cordova-plugin-rongcloud-im/2.3.0/package.tgz
+26 verbose request uri https://registry.npmjs.org/cordova-plugin-rongcloud-im
+27 verbose request sending authorization for write operation
+28 info attempt registry request try #1 at 12:13:39
+29 verbose request using bearer token for auth
+30 verbose request id 1f34072e40edabaf
+31 http request PUT https://registry.npmjs.org/cordova-plugin-rongcloud-im
+32 http 504 https://registry.npmjs.org/cordova-plugin-rongcloud-im
+33 verbose bad json <html><body><h1>504 Gateway Time-out</h1>
+33 verbose bad json The server didn't respond in time.
+33 verbose bad json </body></html>
+34 error registry error parsing json
+35 verbose headers { 'content-type': 'text/html',
+35 verbose headers   'cache-control': 'max-age=300',
+35 verbose headers   'transfer-encoding': 'chunked',
+35 verbose headers   'accept-ranges': 'bytes',
+35 verbose headers   date: 'Wed, 16 Dec 2015 04:15:18 GMT',
+35 verbose headers   via: '1.1 varnish',
+35 verbose headers   connection: 'keep-alive',
+35 verbose headers   'x-served-by': 'cache-itm7424-ITM',
+35 verbose headers   'x-cache': 'MISS',
+35 verbose headers   'x-cache-hits': '0',
+35 verbose headers   'x-timer': 'S1450239219.727032,VS0,VE98556' }
+36 info retry will retry, error on last attempt: SyntaxError: Unexpected token <
+36 info retry <html><body><h1>504 Gateway Time-out</h1>
+36 info retry The server didn't respond in time.
+36 info retry </body></html>
+37 info attempt registry request try #2 at 12:15:28
+38 verbose request using bearer token for auth
+39 http request PUT https://registry.npmjs.org/cordova-plugin-rongcloud-im
+40 http 504 https://registry.npmjs.org/cordova-plugin-rongcloud-im
+41 verbose bad json <html><body><h1>504 Gateway Time-out</h1>
+41 verbose bad json The server didn't respond in time.
+41 verbose bad json </body></html>
+42 error registry error parsing json
+43 verbose headers { 'content-type': 'text/html',
+43 verbose headers   'cache-control': 'max-age=300',
+43 verbose headers   'transfer-encoding': 'chunked',
+43 verbose headers   'accept-ranges': 'bytes',
+43 verbose headers   date: 'Wed, 16 Dec 2015 04:17:08 GMT',
+43 verbose headers   via: '1.1 varnish',
+43 verbose headers   connection: 'keep-alive',
+43 verbose headers   'x-served-by': 'cache-itm7420-ITM',
+43 verbose headers   'x-cache': 'MISS',
+43 verbose headers   'x-cache-hits': '0',
+43 verbose headers   'x-timer': 'S1450239329.155183,VS0,VE99270' }
+44 info retry will retry, error on last attempt: SyntaxError: Unexpected token <
+44 info retry <html><body><h1>504 Gateway Time-out</h1>
+44 info retry The server didn't respond in time.
+44 info retry </body></html>
+45 info attempt registry request try #3 at 12:18:08
+46 verbose request using bearer token for auth
+47 http request PUT https://registry.npmjs.org/cordova-plugin-rongcloud-im
+48 http 504 https://registry.npmjs.org/cordova-plugin-rongcloud-im
+49 verbose bad json <html><body><h1>504 Gateway Time-out</h1>
+49 verbose bad json The server didn't respond in time.
+49 verbose bad json </body></html>
+50 error registry error parsing json
+51 verbose headers { 'content-type': 'text/html',
+51 verbose headers   'cache-control': 'max-age=300',
+51 verbose headers   'transfer-encoding': 'chunked',
+51 verbose headers   'accept-ranges': 'bytes',
+51 verbose headers   date: 'Wed, 16 Dec 2015 04:19:47 GMT',
+51 verbose headers   via: '1.1 varnish',
+51 verbose headers   connection: 'keep-alive',
+51 verbose headers   'x-served-by': 'cache-itm7422-ITM',
+51 verbose headers   'x-cache': 'MISS',
+51 verbose headers   'x-cache-hits': '0',
+51 verbose headers   'x-timer': 'S1450239489.193324,VS0,VE98541' }
+52 verbose request invalidating /Users/zy/.npm/registry.npmjs.org/cordova-plugin-rongcloud-im on PUT
+53 error publish Failed PUT 504
+54 verbose stack SyntaxError: Unexpected token <
+54 verbose stack <html><body><h1>504 Gateway Time-out</h1>
+54 verbose stack The server didn't respond in time.
+54 verbose stack </body></html>
+54 verbose stack
+54 verbose stack
+54 verbose stack     at Object.parse (native)
+54 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:199:23)
+54 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+54 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:198:22)
+54 verbose stack     at emitTwo (events.js:88:13)
+54 verbose stack     at Request.emit (events.js:173:7)
+54 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1082:10)
+54 verbose stack     at emitOne (events.js:83:20)
+54 verbose stack     at Request.emit (events.js:170:7)
+54 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1009:12)
+55 verbose cwd /Users/zy/Desktop/ionic/cordova-plugin-rongcloud-im
+56 error Darwin 15.0.0
+57 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish" "."
+58 error node v5.2.0
+59 error npm  v3.3.12
+60 error Unexpected token <
+60 error <html><body><h1>504 Gateway Time-out</h1>
+60 error The server didn't respond in time.
+60 error </body></html>
+61 error If you need help, you may report this error at:
+61 error     <https://github.com/npm/npm/issues>
+62 verbose exit [ 1, true ]

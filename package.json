@@ -1,0 +1,35 @@
+{
+  "name": "cordova-plugin-rongcloud-im",
+  "version": "2.3.0",
+  "description": "Cordova RongCloud IMLib Plugin",
+  "cordova": {
+    "id": "cordova-plugin-rongcloud-im",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rongcloud/cordova-plugin-rongcloud-im.git"
+  },
+  "keywords": [
+    "RongCloud",
+    "IM",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0"
+    }
+  ],
+  "author": "RongCloud",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/rongcloud/cordova-plugin-rongcloud-im/issues"
+  },
+  "homepage": "https://github.com/rongcloud/cordova-plugin-rongcloud-im#readme"
+}
