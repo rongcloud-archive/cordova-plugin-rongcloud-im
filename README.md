@@ -20,8 +20,8 @@ All functions accept optional success and failure callbacks as their final two a
 
 ## API
 
-http://www.rongcloud.cn/docs/cordova.html
+[http://www.rongcloud.cn/docs/cordova.html](http://www.rongcloud.cn/docs/cordova.html)
 
 ## Demo
 
-https://github.com/rongcloud/cordova-plugin-rongcloud-im-demo
+[https://github.com/rongcloud/cordova-plugin-rongcloud-im-demo](https://github.com/rongcloud/cordova-plugin-rongcloud-im-demo)
