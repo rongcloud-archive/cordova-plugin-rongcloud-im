@@ -27,7 +27,7 @@
     }
   ],
   "author": "RongCloud",
-  "license": "Apache 2.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/rongcloud/cordova-plugin-rongcloud-im/issues"
   },
