@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-rongcloud-im",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Cordova RongCloud IMLib Plugin",
   "cordova": {
     "id": "cordova-plugin-rongcloud-im",
