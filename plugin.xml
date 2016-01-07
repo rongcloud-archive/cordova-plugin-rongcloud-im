@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="cn.rongcloud.imlib" version="2.3.0" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+<plugin id="cn.rongcloud.imlib" version="2.3.0"
+        xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
     <name>RongCloudLibPlugin</name>
     <description>Cordova RongCloud IMLib Plugin</description>
