@@ -1,4 +1,4 @@
-package io.rong.cordova;
+package io.rong.common;
 
 public class RongResult<T> {
     T result;

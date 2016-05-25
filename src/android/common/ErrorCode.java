@@ -1,4 +1,4 @@
-package io.rong.cordova;
+package io.rong.common;
 
 import android.util.Log;
 

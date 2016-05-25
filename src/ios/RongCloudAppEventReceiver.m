@@ -26,9 +26,9 @@ extern NSString* const CDVRemoteNotificationError;
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveLocalNotification:) name:CDVLocalNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRegisterForRemoteNotificationsWithDeviceToken:) name:CDVRemoteNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:[RCIMClient sharedRCIMClient] selector:@selector(didApplicationEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didApplicationEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
         
-        [[NSNotificationCenter defaultCenter] addObserver:[RCIMClient sharedRCIMClient] selector:@selector(willApplicationEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willApplicationEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
         [RongCloudApplicationHandler didApplicationFinishLaunchingWithOptions:nil];
     }
     return self;
@@ -36,7 +36,8 @@ extern NSString* const CDVRemoteNotificationError;
 - (void)didReceiveLocalNotification:(UILocalNotification*)notification {
 
 }
-- (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSString*)deviceToken {
+- (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSNotification*)notification {
+    NSString *deviceToken = notification.object;
     [RongCloudApplicationHandler didApplicationRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 - (void)didApplicationEnterBackground {

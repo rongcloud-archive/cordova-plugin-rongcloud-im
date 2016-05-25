@@ -1,13 +1,17 @@
-package io.rong.cordova.translation;
+package io.rong.common.translation;
 
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
+import io.rong.message.CommandMessage;
 import io.rong.message.CommandNotificationMessage;
+import io.rong.message.ContactNotificationMessage;
 import io.rong.message.DiscussionNotificationMessage;
+import io.rong.message.GroupNotificationMessage;
 import io.rong.message.ImageMessage;
 import io.rong.message.InformationNotificationMessage;
 import io.rong.message.LocationMessage;
+import io.rong.message.ProfileNotificationMessage;
 import io.rong.message.RichContentMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
@@ -44,25 +48,33 @@ public class TranslatedMessage implements ITranslatedMessage {
 
     public static TranslatedMessageContent translateMessageContent(MessageContent msgContent) {
         TranslatedMessageContent content = null;
-        if(msgContent == null)
+        if (msgContent == null)
             return null;
 
-        if(msgContent instanceof TextMessage) {
+        if (msgContent instanceof TextMessage) {
             content = new TranslatedTextMessage(msgContent);
-        } else if(msgContent instanceof ImageMessage) {
+        } else if (msgContent instanceof ImageMessage) {
             content = new TranslatedImageMessage(msgContent);
-        } else if(msgContent instanceof VoiceMessage) {
+        } else if (msgContent instanceof VoiceMessage) {
             content = new TranslatedVoiceMessage(msgContent);
-        } else if(msgContent instanceof RichContentMessage) {
+        } else if (msgContent instanceof RichContentMessage) {
             content = new TranslatedRichContentMessage(msgContent);
-        } else if(msgContent instanceof CommandNotificationMessage) {
-            content = new TranslatedCommandMessage(msgContent);
-        } else if(msgContent instanceof LocationMessage) {
+        } else if (msgContent instanceof CommandNotificationMessage) {
+            content = new TranslatedCommandNotificationMessage(msgContent);
+        } else if (msgContent instanceof LocationMessage) {
             content = new TranslatedLocationMessage(msgContent);
-        } else if(msgContent instanceof InformationNotificationMessage) {
+        } else if (msgContent instanceof InformationNotificationMessage) {
             content = new TranslatedInformationNtfMessage(msgContent);
-        } else if(msgContent instanceof DiscussionNotificationMessage) {
+        } else if (msgContent instanceof DiscussionNotificationMessage) {
             content = new TranslatedDiscussionNtfMessage(msgContent);
+        } else if (msgContent instanceof CommandMessage) {
+            content = new TranslatedCommandMessage(msgContent);
+        } else if (msgContent instanceof ContactNotificationMessage) {
+            content = new TranslatedContactNtfMessage(msgContent);
+        } else if (msgContent instanceof ProfileNotificationMessage) {
+            content = new TranslatedProfileNtfMessage(msgContent);
+        } else if (msgContent instanceof GroupNotificationMessage) {
+            content = new TranslatedGrpNtfMessage(msgContent);
         }
         return content;
     }

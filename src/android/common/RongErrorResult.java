@@ -1,4 +1,4 @@
-package io.rong.cordova;
+package io.rong.common;
 
 /**
  * Created by weiqinxiao on 15/10/16.

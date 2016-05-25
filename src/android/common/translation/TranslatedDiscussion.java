@@ -1,4 +1,4 @@
-package io.rong.cordova.translation;
+package io.rong.common.translation;
 
 import java.util.List;
 

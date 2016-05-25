@@ -1,4 +1,4 @@
-package io.rong.cordova.translation;
+package io.rong.common.translation;
 
 /**
  * Created by weiqinxiao on 15/9/16.

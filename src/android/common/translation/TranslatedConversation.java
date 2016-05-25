@@ -1,4 +1,4 @@
-package io.rong.cordova.translation;
+package io.rong.common.translation;
 
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;

@@ -1,14 +1,15 @@
-package io.rong.cordova;
+package io.rong.common;
 
 public class RongException{
 
     private int code;
 
-    public RongException(int code){
-        this.code = code;
+    public RongException(ErrorCode errorCode){
+        this.code = errorCode.getValue();
     }
 
-    public RongException(ErrorCode errorCode){
+    public RongException(int code){
+        ErrorCode errorCode = ErrorCode.setValue(code);
         this.code = errorCode.getValue();
     }
 

@@ -18,6 +18,14 @@
 
 @implementation RongCloudLibPlugin
 
+- (instancetype)initWithWebView:(UIWebView*)theWebView {
+    self = [super initWithWebView:theWebView];
+    if (self) {
+        self.appEventReceiver = [[RongCloudAppEventReceiver alloc] init];
+    }
+    return self;
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -50,7 +58,7 @@
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:resultDict];
     }
-    
+
     [pluginResult setKeepCallbackAsBool:!doDelete];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
 }
@@ -77,7 +85,7 @@
 - (void)connect:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSString *token = [command argumentAtIndex:0 withDefault:nil];
     if (command.callbackId) {
         [self.rongCloudAdapter connectWithToken:token callbackId:command.callbackId];
@@ -87,7 +95,7 @@
 - (void)disconnect:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"%s", __FUNCTION__);
-  
+
     NSNumber *isReceivePush = [command argumentAtIndex:0 withDefault:nil];
     if (command.callbackId) {
         [self.rongCloudAdapter disconnect:isReceivePush callbackId:command.callbackId];
@@ -111,16 +119,16 @@
 - (void)sendTextMessage:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSString * _conversationTypeString = [command argumentAtIndex:0 withDefault:nil];
     NSString *_targetId                = [command argumentAtIndex:1 withDefault:nil];
     NSString *_content                 = [command argumentAtIndex:2 withDefault:nil];
     NSString *_extra                   = [command argumentAtIndex:3 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter sendTextMessage:_conversationTypeString targetId:_targetId content:_content extra:_extra callbackId:command.callbackId];
     }
-    
+
 }
 
 - (void)sendImageMessage : (CDVInvokedUrlCommand *)command
@@ -131,7 +139,7 @@
     NSString *_targetId                = [command argumentAtIndex:1 withDefault:nil];
     NSString *_imagepath                 = [command argumentAtIndex:2 withDefault:nil];
     NSString *_extra                   = [command argumentAtIndex:3 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter sendImageMessage:_conversationTypeString targetId:_targetId imagePath:_imagepath extra:_extra callbackId:command.callbackId];
     }
@@ -146,7 +154,7 @@
     NSString *_voicePath               = [command argumentAtIndex:2 withDefault:nil];
     NSNumber *_duration                = [command argumentAtIndex:3 withDefault:nil];
     NSString *_extra                   = [command argumentAtIndex:4 withDefault:nil];
-        
+
     if (command.callbackId) {
         [self.rongCloudAdapter sendVoiceMessage:_conversationTypeString targetId:_targetId voicePath:_voicePath duration:_duration extra:_extra callbackId:command.callbackId];
     }
@@ -163,7 +171,7 @@
     NSString *_locationName            = [command argumentAtIndex:4 withDefault:nil];
     NSString *_imagePath               = [command argumentAtIndex:5 withDefault:nil];
     NSString *_extra                   = [command argumentAtIndex:6 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter sendLocationMessage:_conversationTypeString targetId:_targetId imagePath:_imagePath latitude:_latitude longitude:_longitude locationName:_locationName extra:_extra callbackId:command.callbackId];
     }
@@ -179,7 +187,7 @@
     NSString *_content                 = [command argumentAtIndex:3 withDefault:nil];
     NSString *_imageUrl                = [command argumentAtIndex:4 withDefault:nil];
     NSString *_extra                   = [command argumentAtIndex:5 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter sendRichContentMessage:_conversationTypeString targetId:_targetId title:_tiltle content:_content imageUrl:_imageUrl extra:_extra callbackId:command.callbackId];
     }
@@ -192,7 +200,7 @@
     NSString *_targetId                = [command argumentAtIndex:1 withDefault:nil];
     NSString *_name                    = [command argumentAtIndex:2 withDefault:nil];
     NSString *_data                    = [command argumentAtIndex:3 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter sendCommandNotificationMessage:_conversationTypeString targetId:_targetId name:_name data:_data callbackId:command.callbackId];
     }
@@ -200,12 +208,12 @@
 -(void)sendCommandMessage : (CDVInvokedUrlCommand *)command
 {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSString * _conversationTypeString = [command argumentAtIndex:0 withDefault:nil];
     NSString *_targetId                = [command argumentAtIndex:1 withDefault:nil];
     NSString *_name                    = [command argumentAtIndex:2 withDefault:nil];
     NSString *_data                    = [command argumentAtIndex:3 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter sendCommandMessage:_conversationTypeString targetId:_targetId name:_name data:_data callbackId:command.callbackId];
     }
@@ -213,7 +221,7 @@
 - (void)setOnReceiveMessageListener:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"%s", __FUNCTION__);
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter setOnReceiveMessageListener:command.callbackId];
     }
@@ -231,7 +239,7 @@
     if (command.callbackId) {
         [self.rongCloudAdapter getConversationList:command.callbackId];
     }
-    
+
 }
 
 - (void)getConversation:(CDVInvokedUrlCommand *)command
@@ -252,7 +260,7 @@
 
     NSString * _conversationTypeString = [command argumentAtIndex:0 withDefault:nil];
     NSString *_targetId                = [command argumentAtIndex:1 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter removeConversation:_conversationTypeString targetId:_targetId callbackId:command.callbackId];
     }
@@ -275,7 +283,7 @@
     NSString * _conversationTypeString = [command argumentAtIndex:0 withDefault:nil];
     NSString *_targetId                = [command argumentAtIndex:1 withDefault:nil];
     NSNumber * _isTop                  = [command argumentAtIndex:2 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter setConversationToTop:_conversationTypeString targetId:_targetId isTop:_isTop callbackId:command.callbackId];
     }
@@ -290,22 +298,22 @@
 
     NSString * _conversationTypeString = [command argumentAtIndex:0 withDefault:nil];
     NSString *_targetId                = [command argumentAtIndex:1 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter getConversationNotificationStatus:_conversationTypeString targetId:_targetId callbackId:command.callbackId];
     }
-    
+
 }
 - (void)setConversationNotificationStatus:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"%s", __FUNCTION__);
 
     NSString * _conversationTypeString        = [command argumentAtIndex:0 withDefault:nil];
-    
+
     NSString *_targetId                       = [command argumentAtIndex:1 withDefault:nil];
     NSString *_conversationnotificationStatus = [command argumentAtIndex:2 withDefault:nil];
-    
- 
+
+
     if (command.callbackId) {
         [self.rongCloudAdapter setConversationNotificationStatus:_conversationTypeString targetId:_targetId conversationnotificationStatus:_conversationnotificationStatus callbackId:command.callbackId];
     }
@@ -321,7 +329,7 @@
     NSString * _conversationTypeString = [command argumentAtIndex:0 withDefault:nil];
     NSString *_targetId                = [command argumentAtIndex:1 withDefault:nil];
     NSNumber *_count                   = [command argumentAtIndex:2 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter getLatestMessages:_conversationTypeString targetId:_targetId count:_count callbackId:command.callbackId];
     }
@@ -335,7 +343,7 @@
     NSString *_targetId                = [command argumentAtIndex:1 withDefault:nil];
     NSNumber *_count                   = [command argumentAtIndex:2 withDefault:nil];
     NSNumber *_oldestMessageId         = [command argumentAtIndex:3 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter getHistoryMessages:_conversationTypeString targetId:_targetId count:_count oldestMessageId:_oldestMessageId callbackId:command.callbackId];
     }
@@ -361,7 +369,7 @@
     NSLog(@"%s", __FUNCTION__);
 
     NSArray *_messageIds = [command argumentAtIndex:0 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter deleteMessages:_messageIds callbackId:command.callbackId];
     }
@@ -385,7 +393,7 @@
 - (void) getTotalUnreadCount:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"%s", __FUNCTION__);
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter getTotalUnreadCount:command.callbackId];
     }
@@ -397,7 +405,7 @@
 
     NSString * _conversationTypeString = [command argumentAtIndex:0 withDefault:nil];
     NSString *_targetId = [command argumentAtIndex:1 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter getUnreadCount:_conversationTypeString targetId:_targetId callbackId:command.callbackId];
     }
@@ -406,9 +414,9 @@
 -(void)getUnreadCountByConversationTypes:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSArray *nsstring_conversationTypes = [command argumentAtIndex:0 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter getUnreadCountByConversationTypes:nsstring_conversationTypes callbackId:command.callbackId];
     }
@@ -430,11 +438,11 @@
 - (void) clearMessagesUnreadStatus: (CDVInvokedUrlCommand *)command
 {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSString * _conversationTypeString = [command argumentAtIndex:0 withDefault:nil];
-    
+
     NSString *_targetId = [command argumentAtIndex:1 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter clearMessagesUnreadStatus:_conversationTypeString withTargetId:_targetId withCallBackId:command.callbackId];
     }
@@ -457,7 +465,7 @@
 {
     NSLog(@"%s", __FUNCTION__);
     NSString * _conversationTypeString = [command argumentAtIndex:0 withDefault:nil];
-    
+
     NSString *_targetId = [command argumentAtIndex:1 withDefault:nil];
     if (command.callbackId) {
         [self.rongCloudAdapter getTextMessageDraft:_conversationTypeString withTargetId:_targetId withCallBackId:command.callbackId];
@@ -480,7 +488,7 @@
     NSLog(@"%s", __FUNCTION__);
     NSString *conversationTypeString = [command argumentAtIndex:0 withDefault:nil];
     NSString *targetId = [command argumentAtIndex:1 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter clearTextMessageDraft:conversationTypeString withTargetId:targetId withCallBackId:command.callbackId];
     }
@@ -494,7 +502,7 @@
     NSLog(@"%s", __FUNCTION__);
     NSString *name = [command argumentAtIndex:0 withDefault:nil];
     NSArray *userIds = [command argumentAtIndex:1 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter createDiscussion:name withUserIdList:userIds withCallBackId:command.callbackId];
     }
@@ -504,7 +512,7 @@
 {
     NSLog(@"%s", __FUNCTION__);
     NSString *discussionId = [command argumentAtIndex:0 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter getDiscussion:discussionId withCallBackId:command.callbackId];
     }
@@ -515,7 +523,7 @@
     NSLog(@"%s", __FUNCTION__);
     NSString *discussionId = [command argumentAtIndex:0 withDefault:nil];
     NSString *name = [command argumentAtIndex:1 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter setDiscussionName:discussionId withName:name withCallBackId:command.callbackId];
     }
@@ -527,7 +535,7 @@
 
     NSString *discussionId = [command argumentAtIndex:0 withDefault:nil];
     NSArray *userIds = [command argumentAtIndex:1 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter addMemberToDiscussion:discussionId withUserIdList:userIds withCallBackId:command.callbackId];
     }
@@ -538,7 +546,7 @@
     NSLog(@"%s", __FUNCTION__);
     NSString *discussionId = [command argumentAtIndex:0 withDefault:nil];
     NSString *userIds = [command argumentAtIndex:1 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter removeMemberFromDiscussion:discussionId withUserIds:userIds withCallBackId:command.callbackId];
     }
@@ -547,7 +555,7 @@
 - (void) quitDiscussion:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSString *discussionId = [command argumentAtIndex:0 withDefault:nil];
 
     if (command.callbackId) {
@@ -558,10 +566,10 @@
 - (void) setDiscussionInviteStatus:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSString *targetId = [command argumentAtIndex:0 withDefault:nil];
     NSString *discussionInviteStatus = [command argumentAtIndex:1 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter setDiscussionInviteStatus:targetId withInviteStatus:discussionInviteStatus withCallBackId:command.callbackId];
     }
@@ -573,7 +581,7 @@
 - (void) syncGroup:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSArray *groups = [command argumentAtIndex:0 withDefault:nil];
 
     if (command.callbackId) {
@@ -586,7 +594,7 @@
     NSLog(@"%s", __FUNCTION__);
     NSString *groupId      = [command argumentAtIndex:0 withDefault:nil];
     NSString *groupName    = [command argumentAtIndex:1 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter joinGroup:groupId withGroupName:groupName withCallBackId:command.callbackId];
     }
@@ -608,10 +616,10 @@
 - (void)joinChatRoom:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSString *chatRoomId       = [command argumentAtIndex:0 withDefault:nil];
     NSNumber *defMessageCount  = [command argumentAtIndex:1 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter joinChatRoom:chatRoomId messageCount:defMessageCount withCallBackId:command.callbackId];
     }
@@ -620,7 +628,7 @@
 - (void)quitChatRoom:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSString *chatRoomId = [command argumentAtIndex:0 withDefault:nil];
 
     if (command.callbackId) {
@@ -638,7 +646,7 @@
 
 - (void)logout:(CDVInvokedUrlCommand *)command {
     NSLog(@"%s", __FUNCTION__);
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter logout:command.callbackId];
     }
@@ -646,12 +654,12 @@
 
 - (void)getRemoteHistoryMessages:(CDVInvokedUrlCommand *)command {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSString *conversationTypeString = [command argumentAtIndex:0 withDefault:nil];
     NSString *targetId = [command argumentAtIndex:1 withDefault:nil];
     NSNumber *dateTime = [command argumentAtIndex:2 withDefault:nil];
     NSNumber *count = [command argumentAtIndex:3 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter getRemoteHistoryMessages:conversationTypeString targetId:targetId recordTime:dateTime count:count withCallBackId:command.callbackId];
     }
@@ -659,10 +667,10 @@
 
 - (void)setMessageSentStatus:(CDVInvokedUrlCommand *)command {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSNumber *messageId = [command argumentAtIndex:0 withDefault:nil];
     NSString *statusString = [command argumentAtIndex:1 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter setMessageSentStatus:messageId sentStatus:statusString withCallBackId:command.callbackId];
     }
@@ -670,7 +678,7 @@
 
 - (void)getCurrentUserId:(CDVInvokedUrlCommand *)command {
     NSLog(@"%s", __FUNCTION__);
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter getCurrentUserId:command.callbackId];
     }
@@ -678,9 +686,9 @@
 
 - (void)addToBlacklist:(CDVInvokedUrlCommand *)command {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSString *userId = [command argumentAtIndex:0 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter addToBlacklist:userId withCallBackId:command.callbackId];
     }
@@ -688,9 +696,9 @@
 
 - (void)removeFromBlacklist:(CDVInvokedUrlCommand *)command {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSString *userId = [command argumentAtIndex:0 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter removeFromBlacklist:userId withCallBackId:command.callbackId];
     }
@@ -698,9 +706,9 @@
 
 - (void)getBlacklistStatus:(CDVInvokedUrlCommand *)command {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSString *userId = [command argumentAtIndex:0 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter getBlacklistStatus:userId withCallBackId:command.callbackId];
     }
@@ -708,7 +716,7 @@
 
 - (void)getBlacklist:(CDVInvokedUrlCommand *)command {
     NSLog(@"%s", __FUNCTION__);
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter getBlacklist:command.callbackId];
     }
@@ -716,10 +724,10 @@
 
 - (void)setNotificationQuietHours:(CDVInvokedUrlCommand *)command {
     NSLog(@"%s", __FUNCTION__);
-    
+
     NSString *startTime = [command argumentAtIndex:0 withDefault:nil];
     NSNumber *spanMinutes = [command argumentAtIndex:1 withDefault:nil];
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter setNotificationQuietHours:startTime spanMins:spanMinutes withCallBackId:command.callbackId];
     }
@@ -727,7 +735,7 @@
 
 - (void)removeNotificationQuietHours:(CDVInvokedUrlCommand *)command {
     NSLog(@"%s", __FUNCTION__);
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter removeNotificationQuietHours:command.callbackId];
     }
@@ -735,7 +743,7 @@
 
 - (void)getNotificationQuietHours:(CDVInvokedUrlCommand *)command {
     NSLog(@"%s", __FUNCTION__);
-    
+
     if (command.callbackId) {
         [self.rongCloudAdapter getNotificationQuietHours:command.callbackId];
     }

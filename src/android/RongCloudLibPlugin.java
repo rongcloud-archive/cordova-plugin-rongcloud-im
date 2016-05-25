@@ -13,7 +13,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -30,30 +29,35 @@ import org.json.JSONObject;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import io.rong.cordova.translation.ITranslatedMessage;
-import io.rong.cordova.translation.TranslatedConversation;
-import io.rong.cordova.translation.TranslatedConversationNtfyStatus;
-import io.rong.cordova.translation.TranslatedDiscussion;
-import io.rong.cordova.translation.TranslatedMessage;
-import io.rong.cordova.translation.TranslatedQuietHour;
+import io.rong.common.ErrorCode;
+import io.rong.common.RongErrorResult;
+import io.rong.common.RongException;
+import io.rong.common.RongResult;
+import io.rong.common.translation.ITranslatedMessage;
+import io.rong.common.translation.TranslatedConversation;
+import io.rong.common.translation.TranslatedConversationNtfyStatus;
+import io.rong.common.translation.TranslatedDiscussion;
+import io.rong.common.translation.TranslatedMessage;
+import io.rong.common.translation.TranslatedQuietHour;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Discussion;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.Message;
+import io.rong.message.CommandMessage;
 import io.rong.message.CommandNotificationMessage;
 import io.rong.message.ImageMessage;
 import io.rong.message.LocationMessage;
 import io.rong.message.RichContentMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
+import io.rong.push.RongPushInterface;
 
 public class RongCloudLibPlugin extends CordovaPlugin {
     private final String TAG = "RongCloudLibPlugin";
@@ -63,68 +67,6 @@ public class RongCloudLibPlugin extends CordovaPlugin {
     private RongIMClient mRongClient;
     private Gson mGson;
     private MessageListener mMessageListener;
-
-    private final static List<String> methodList =
-            Arrays.asList(
-                    "init",
-                    "connect",
-                    "disconnect",
-                    "logout",
-                    "getConversationList",
-                    "setOnReceiveMessageListener",
-                    "sendTextMessage",
-                    "sendImageMessage",
-                    "sendVoiceMessage",
-                    "sendRichContentMessage",
-                    "sendLocationMessage",
-                    "getGroupConversationList",
-                    "sendCommandNotificationMessage",
-                    "getConversationNotificationStatus",
-                    "setConversationNotificationStatus",
-                    "syncGroup",
-                    "joinGroup",
-                    "quitGroup",
-                    "setConnectionStatusListener",
-                    "getConnectionStatus",
-                    "joinChatRoom",
-                    "quitChatRoom",
-                    "getConversation",
-                    "clearConversations",
-                    "removeConversation",
-                    "setConversationToTop",
-                    "getTotalUnreadCount",
-                    "getUnreadCount",
-                    "getUnreadCountByConversationTypes",
-                    "getLatestMessages",
-                    "getHistoryMessages",
-                    "getRemoteHistoryMessages",
-                    "deleteMessages",
-                    "clearMessages",
-                    "clearMessagesUnreadStatus",
-                    "setMessageExtra",
-                    "setMessageSentStatus",
-                    "setMessageReceivedStatus",
-                    "saveTextMessageDraft",
-                    "getTextMessageDraft",
-                    "clearTextMessageDraft",
-                    "getHistoryMessagesByObjectName",
-                    "createDiscussion",
-                    "getCurrentUserId",
-                    "getDeltaTime",
-                    "clearNotifications",
-                    "addToBlacklist",
-                    "removeFromBlacklist",
-                    "getBlacklistStatus",
-                    "getBlacklist",
-                    "setNotificationQuietHours",
-                    "removeNotificationQuietHours",
-                    "getNotificationQuietHours",
-                    "setDiscussionInviteStatus",
-                    "getDiscussion",
-                    "setDiscussionName",
-                    "addMemberToDiscussion",
-                    "removeMemberFromDiscussion",
-                    "quitDiscussion");
     private ExecutorService mThreadPool = Executors.newFixedThreadPool(1);
 
     @Override
@@ -136,11 +78,6 @@ public class RongCloudLibPlugin extends CordovaPlugin {
 
     @Override
     public boolean execute(final String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
-        if(!methodList.contains(action)){
-            Log.e(TAG, "execute fail, no method :" + action);
-            return false;
-        }
-
         mThreadPool.execute(new Runnable() {
             @Override
             public void run() {
@@ -170,6 +107,12 @@ public class RongCloudLibPlugin extends CordovaPlugin {
         return !appPackageName.equals(topAppPackageName);
     }
 
+    private boolean notificationDisabled = false;
+    public void disableLocalNotification(CallbackContext context) {
+        notificationDisabled = true;
+        callModuleSuccess(context);
+    }
+
     private void notifyIfNeed(CallbackContext context,Message message,int left){
 
         if (isInQuietTime(mContext)) {
@@ -192,7 +135,7 @@ public class RongCloudLibPlugin extends CordovaPlugin {
     }
 
     private void sendNotification() {
-        Notification notification;
+        Notification notification = null;
         Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(mContext.getPackageName());
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         PackageManager pm = mContext.getPackageManager();
@@ -201,10 +144,23 @@ public class RongCloudLibPlugin extends CordovaPlugin {
         String tickerText = mContext.getResources().getString(mContext.getResources().getIdentifier("rc_notification_ticker_text", "string", mContext.getPackageName()));
         PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, 0);
         if (android.os.Build.VERSION.SDK_INT < 11) {
-            notification = new Notification(ai.icon, tickerText, System.currentTimeMillis());
-            notification.setLatestEventInfo(mContext, title, tickerText, pendingIntent);
-            notification.flags = Notification.FLAG_AUTO_CANCEL;
-            notification.defaults = Notification.DEFAULT_SOUND;
+            // notification = new Notification(ai.icon, tickerText, System.currentTimeMillis());
+            // notification.setLatestEventInfo(mContext, title, tickerText, pendingIntent);
+            // notification.flags = Notification.FLAG_AUTO_CANCEL;
+            // notification.defaults = Notification.DEFAULT_SOUND;
+            try {
+                Method method;
+                notification = new Notification(mContext.getApplicationInfo().icon, tickerText, System.currentTimeMillis());
+
+                Class<?> classType = Notification.class;
+                method = classType.getMethod("setLatestEventInfo", new Class[]{Context.class, String.class, String.class, PendingIntent.class});
+                method.invoke(notification, new Object[]{mContext, title, tickerText, pendingIntent});
+
+                notification.flags = Notification.FLAG_AUTO_CANCEL;
+                notification.defaults = Notification.DEFAULT_ALL;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) ai.loadIcon(pm);
             Bitmap appIcon = bitmapDrawable.getBitmap();
@@ -232,7 +188,7 @@ public class RongCloudLibPlugin extends CordovaPlugin {
 
         @Override
         public boolean onReceived(Message message, int left) {
-            if(isInBackground()) {
+            if(isInBackground() && !notificationDisabled) {
                 notifyIfNeed(context,message,left);
             }
             TranslatedMessage msg = translateMessage(message);
@@ -245,7 +201,9 @@ public class RongCloudLibPlugin extends CordovaPlugin {
         try {
             String appkey = args.getString(0);
             RongIMClient.init(mContext, appkey);
+            RongPushInterface.init(mContext, appkey);
             mInitialized = true;
+            callModuleSuccess(callbackContext);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -309,7 +267,7 @@ public class RongCloudLibPlugin extends CordovaPlugin {
             public void onSuccess(List<Conversation> conversations) {
                 ArrayList<TranslatedConversation> list = new ArrayList<TranslatedConversation>();
                 if (conversations == null || conversations.size() == 0) {
-                    callModuleSuccess(context, "");
+                    callModuleSuccess(context, list);
                     return;
                 }
 
@@ -350,7 +308,7 @@ public class RongCloudLibPlugin extends CordovaPlugin {
             return;
         }
 
-        mRongClient.disconnect(false);
+        mRongClient.disconnect(args.optBoolean(0));
         callModuleSuccess(context, null);
     }
 
@@ -702,6 +660,49 @@ public class RongCloudLibPlugin extends CordovaPlugin {
         });
     }
 
+    public void sendCommandMessage(final JSONArray args, final CallbackContext context) {
+        if(!mInitialized) {
+            callModuleError(context, new RongException(ErrorCode.NOT_INIT));
+            return;
+        }
+        if (mRongClient == null) {
+            callModuleError(context, new RongException(ErrorCode.NOT_CONNECTED));
+            return;
+        }
+        String type = args.optString(0);
+        String targetId = args.optString(1);
+        String name = args.optString(2);
+        String data = args.optString(3);
+
+        if (TextUtils.isEmpty(type) || TextUtils.isEmpty(targetId) || TextUtils.isEmpty(name) || TextUtils.isEmpty(data)) {
+            callModuleError(context, new RongException(ErrorCode.ARGUMENT_EXCEPTION));
+            return;
+        }
+
+        Conversation.ConversationType conversationType = Conversation.ConversationType.valueOf(type);
+        mRongClient.sendMessage(conversationType, targetId, CommandMessage.obtain(name, data), null, null, new RongIMClient.SendMessageCallback() {
+            @Override
+            public void onError(Integer id, RongIMClient.ErrorCode errorCode) {
+                callModuleError(context, new ProgressModel(id), new RongException(errorCode.getValue()));
+            }
+
+            @Override
+            public void onSuccess(Integer id) {
+                callModuleSuccess(context, new ProgressModel(id));
+            }
+        }, new RongIMClient.ResultCallback<Message>() {
+            @Override
+            public void onSuccess(Message message) {
+                TranslatedMessage translatedMessage = new TranslatedMessage(message);
+                callModulePrepare(context, new ProgressModel(translatedMessage));
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                callModuleError(context, new RongException(errorCode.getValue()));
+            }
+        });
+    }
 
     public void getConversationNotificationStatus(final JSONArray args, final CallbackContext context) {
         if(!mInitialized) {
@@ -1838,7 +1839,7 @@ public class RongCloudLibPlugin extends CordovaPlugin {
             callModuleError(context, new RongException(ErrorCode.NOT_CONNECTED));
             return;
         }
-        mRongClient.clearNotifications();
+        RongPushInterface.clearAllNotifications(mContext);
         callModuleSuccess(context, null);
     }
 
