@@ -20,7 +20,6 @@
 
 #ifdef __CORDOVA_4_0_0
 - (void)pluginInitialize {
-  //[self initNotifications];
   self.appEventReceiver = [[RongCloudAppEventReceiver alloc] init];
 }
 #else
@@ -39,7 +38,6 @@
     }
     return self;
 }
-
 
 #pragma mark private methods
 - (RongCloudHybridAdapter *)rongCloudAdapter {
