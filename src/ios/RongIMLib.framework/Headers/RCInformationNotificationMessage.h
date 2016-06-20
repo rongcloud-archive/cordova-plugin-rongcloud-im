@@ -12,28 +12,36 @@
 
 #import "RCMessageContent.h"
 
+/*!
+ 通知消息的类型名
+ */
 #define RCInformationNotificationMessageIdentifier @"RC:InfoNtf"
-/**
- *  系统消息类
+
+/*!
+ 通知消息类
+ 
+ @discussion 通知消息类，此消息会进行存储，但不计入未读消息数。
  */
 @interface RCInformationNotificationMessage : RCMessageContent
 
-/**
- *  消息内容
+/*!
+ 通知的内容
  */
 @property(nonatomic, strong) NSString *message;
-/**
- *  附加信息。
+
+/*!
+ 通知的附加信息
  */
 @property(nonatomic, strong) NSString *extra;
-/**
- *  构造方法
- *
- *  @param message 消息内容
- *  @param extra   附加信息。
- *
- *  @return 类实例
+
+/*!
+ 初始化通知消息
+ 
+ @param message 通知的内容
+ @param extra   通知的附加信息
+ @return        通知消息对象
  */
-+ (instancetype)notificationWithMessage:(NSString *)message extra:(NSString *)extra;
++ (instancetype)notificationWithMessage:(NSString *)message
+                                  extra:(NSString *)extra;
 
 @end

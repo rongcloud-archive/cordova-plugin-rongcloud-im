@@ -12,23 +12,36 @@
 
 #import <Foundation/Foundation.h>
 
-/**
- *  群信息
+/*!
+ 群组信息类
  */
 @interface RCGroup : NSObject <NSCoding>
-/** 群ID */
+
+/*!
+ 群组ID
+ */
 @property(nonatomic, strong) NSString *groupId;
-/** 群名称 */
+
+/*!
+ 群组名称
+ */
 @property(nonatomic, strong) NSString *groupName;
-/** 群头像URL */
+
+/*!
+ 群组头像的URL
+ */
 @property(nonatomic, strong) NSString *portraitUri;
 
-/**
- *  指派的初始化方法
- *
- *  @param  groupId     群ID
- *  @param  groupName   群名称
- *  @param  portraitUri 群头像URI
+/*!
+ 群组信息的初始化方法
+ 
+ @param groupId         群组ID
+ @param groupName       群组名称
+ @param portraitUri     群组头像的URL
+ @return                群组信息对象
  */
-- (instancetype)initWithGroupId:(NSString *)groupId groupName:(NSString *)groupName portraitUri:(NSString *)portraitUri;
+- (instancetype)initWithGroupId:(NSString *)groupId
+                      groupName:(NSString *)groupName
+                    portraitUri:(NSString *)portraitUri;
+
 @end

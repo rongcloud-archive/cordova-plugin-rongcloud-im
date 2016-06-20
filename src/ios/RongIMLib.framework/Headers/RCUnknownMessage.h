@@ -11,10 +11,16 @@
 //  Created by xugang on 15/1/24.
 
 #import "RCMessageContent.h"
+
+/*!
+ 未知消息的类型名
+ */
 #define RCUnknownMessageTypeIdentifier @"RC:UnknownMsg"
 
-/**
- *  未知消息，所有未注册，未实现的消息都会通过未知消息返回
+/*!
+ 未知消息类
+ 
+ @discussion 所有未注册的消息类型，在IMKit中都会作为此类消息处理和显示。
  */
 @interface RCUnknownMessage : RCMessageContent
 

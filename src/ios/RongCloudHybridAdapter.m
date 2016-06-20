@@ -31,6 +31,7 @@ static BOOL isConnected = NO;
 
 @property (nonatomic, strong) id connectionCallbackId;
 @property (nonatomic,strong) id receiveMessageCbId;
+@property (nonatomic, assign)BOOL disableLocalNotification;
 
 @property (nonatomic, weak)id<RongCloud2HybridDelegation> commandDelegate;
 @end
@@ -42,6 +43,7 @@ static BOOL isConnected = NO;
     self = [super init];
     if (self) {
         self.commandDelegate = commandDelegate;
+        self.disableLocalNotification = NO;
     }
     return self;
 }
@@ -429,7 +431,7 @@ static BOOL isConnected = NO;
     NSData *wavData ;
     if (amrData.length > 6 && ((unsigned char*)amrData.bytes)[0] == 0x23 && ((unsigned char*)amrData.bytes)[1] == 0x21 && ((unsigned char*)amrData.bytes)[2] == 0x41 && ((unsigned char*)amrData.bytes)[3] == 0x4d && ((unsigned char*)amrData.bytes)[4] == 0x52) {
         //amr first 6 byte are 0x23 0x21 0x41 0x4d 0x52 0X0A(#!AMR.)
-        wavData                = [[RCAMRDataConverter sharedAMRDataConverter]dcodeAMRToWAVE:amrData];
+        wavData                = [[RCAMRDataConverter sharedAMRDataConverter]decodeAMRToWAVE:amrData];
     } else {
         wavData = amrData;
     }
@@ -584,20 +586,22 @@ static BOOL isConnected = NO;
     /**
      *  Add Local Notification Event
      */
-    NSNumber *nAppbackgroundMode = [[NSUserDefaults standardUserDefaults]objectForKey:kAppBackgroundMode];
-    BOOL _bAppBackgroundMode = [nAppbackgroundMode boolValue];
-    if (YES == _bAppBackgroundMode && 0 == nLeft) {
-        //post local notification
-        [[RCIMClient sharedRCIMClient]getConversationNotificationStatus:message.conversationType targetId:message.targetId success:^(RCConversationNotificationStatus nStatus) {
-            if (NOTIFY == nStatus) {
-                NSString *_notificationMessae = @"您收到了一条新消息";
-                
-                [RongCloudModel postLocalNotification:_notificationMessae];
-                
-            }
-        } error:^(RCErrorCode status) {
-            NSLog(@"notification error code= %d",(int)status);
-        }];
+    if (!self.disableLocalNotification) {
+        NSNumber *nAppbackgroundMode = [[NSUserDefaults standardUserDefaults]objectForKey:kAppBackgroundMode];
+        BOOL _bAppBackgroundMode = [nAppbackgroundMode boolValue];
+        if (YES == _bAppBackgroundMode && 0 == nLeft) {
+            //post local notification
+            [[RCIMClient sharedRCIMClient]getConversationNotificationStatus:message.conversationType targetId:message.targetId success:^(RCConversationNotificationStatus nStatus) {
+                if (NOTIFY == nStatus) {
+                    NSString *_notificationMessae = @"您收到了一条新消息";
+                    
+                    [RongCloudModel postLocalNotification:_notificationMessae];
+                    
+                }
+            } error:^(RCErrorCode status) {
+                NSLog(@"notification error code= %d",(int)status);
+            }];
+        }
     }
 }
 
@@ -1874,5 +1878,18 @@ static BOOL isConnected = NO;
         
         [self.commandDelegate sendResult:_result error:_err withCallbackId:callbackId doDelete:YES];
     }];
+}
+- (void)disableLocalNotification:(id)callbackId {
+    NSLog(@"%s", __FUNCTION__);
+    
+    if (![self checkIsInit:callbackId doDelete:YES]) {
+        return;
+    }
+    
+    self.disableLocalNotification = YES;
+
+    
+    NSDictionary *_result = @{@"status": SUCCESS};
+    [self.commandDelegate sendResult:_result error:nil withCallbackId:callbackId doDelete:YES];
 }
 @end

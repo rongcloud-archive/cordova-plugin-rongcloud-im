@@ -20,35 +20,42 @@
 #include "interf_dec.h"
 #include "interf_enc.h"
 
-/**
- *  AMR和WAV转换类
+/*!
+ AMR格式与WAV格式音频转换工具类
  */
 @interface RCAMRDataConverter : NSObject
 
-/**
- *  RCAmrDataConverter instance
- *
- *  @return instance
+/*!
+ 获取AMR格式与WAV格式音频转换工具类单例
+ 
+ @return AMR格式与WAV格式音频转换工具类单例
  */
 + (RCAMRDataConverter *)sharedAMRDataConverter;
-/**
- *  AMR转换成WAVE格式的音频.
- *
- *  @param data AMR格式数据
- *
- *  @return WAVE格式数据
+
+/*!
+ 将AMR格式的音频数据转化为WAV格式的音频数据
+ 
+ @param data    AMR格式的音频数据，必须是AMR-NB的格式
+ @return        WAV格式的音频数据
  */
-- (NSData *)dcodeAMRToWAVE:(NSData *)data;
-/**
- *  WAVE转换成AMR格式音频
- *
- *  @param data           WAVE格式数据 注意声音的采样率  AVNumberOfChannelsKey=1 AVLinearPCMBitDepthKey=16
- *  @param nChannels      默认传入1。
- *  @param nBitsPerSample 默认传入16。
- *
- *  @return AMR格式数据
+- (NSData *)decodeAMRToWAVE:(NSData *)data;
+
+/*!
+ 将WAV格式的音频数据转化为AMR格式的音频数据（8KHz采样）
+ 
+ @param data            WAV格式的音频数据
+ @param nChannels       声道数
+ @param nBitsPerSample  采样位数（精度）
+ @return                AMR-NB格式的音频数据
+ 
+ @discussion 此方法为工具类方法，您可以使用此方法将任意WAV音频转换为AMR-NB格式的音频。
+ 
+ @warning 如果您想和SDK自带的语音消息保持一致和互通，考虑到跨平台和传输的原因，SDK对于WAV音频有所限制.
+ 具体可以参考RCVoiceMessage中的音频参数说明(nChannels为1，nBitsPerSample为16)。
  */
-- (NSData *)ecodeWAVEToAMR:(NSData *)data channel:(int)nChannels nBitsPerSample:(int)nBitsPerSample;
+- (NSData *)encodeWAVEToAMR:(NSData *)data
+                   channel:(int)nChannels
+            nBitsPerSample:(int)nBitsPerSample;
 @end
 
 #endif

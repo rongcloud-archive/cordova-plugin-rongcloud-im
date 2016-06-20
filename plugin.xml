@@ -127,50 +127,50 @@
     <source-file src="src/android/res/values-en/rc_notification_string.xml" target-dir="res/values-en"/>
   </platform>
 
-    <platform name="ios">
-      <config-file parent="/*" target="config.xml">
-        <feature name="RongCloudLibPlugin">
-          <param name="ios-package" value="RongCloudLibPlugin"/>
-        </feature>
+  <platform name="ios">
+      <config-file target="config.xml" parent="/*">
+          <feature name="RongCloudLibPlugin">
+              <param name="ios-package" value="RongCloudLibPlugin"/>
+          </feature>
       </config-file>
-      <header-file src="src/ios/RongCloudAppEventReceiver.h" target-dir="src/ios"/>
-      <header-file src="src/ios/RongCloudApplicationHandler.h" target-dir="src/ios"/>
-      <header-file src="src/ios/RongCloudHybridAdapter.h" target-dir="src/ios"/>
-      <header-file src="src/ios/RongCloudConstant.h" target-dir="src/ios"/>
-      <header-file src="src/ios/RongCloudLibPlugin.h" target-dir="src/ios"/>
-      <header-file src="src/ios/RongCloudModel.h" target-dir="src/ios"/>
+      <header-file src="src/ios/RongCloudAppEventReceiver.h" target-dir="src/ios" />
+      <header-file src="src/ios/RongCloudApplicationHandler.h" target-dir="src/ios" />
+      <header-file src="src/ios/RongCloudHybridAdapter.h" target-dir="src/ios" />
+      <header-file src="src/ios/RongCloudConstant.h" target-dir="src/ios" />
+      <header-file src="src/ios/RongCloudLibPlugin.h" target-dir="src/ios" />
+      <header-file src="src/ios/RongCloudModel.h" target-dir="src/ios" />
 
-      <source-file src="src/ios/RongCloudAppEventReceiver.m" target-dir="src/ios"/>
-      <source-file src="src/ios/RongCloudApplicationHandler.m" target-dir="src/ios"/>
-      <source-file src="src/ios/RongCloudHybridAdapter.m" target-dir="src/ios"/>
-      <source-file src="src/ios/RongCloudLibPlugin.m" target-dir="src/ios"/>
-      <source-file src="src/ios/RongCloudModel.m" target-dir="src/ios"/>
-      <source-file framework="true" src="src/ios/libopencore-amrnb.a"/>
+      <source-file src="src/ios/RongCloudAppEventReceiver.m" target-dir="src/ios" />
+      <source-file src="src/ios/RongCloudApplicationHandler.m" target-dir="src/ios" />
+      <source-file src="src/ios/RongCloudHybridAdapter.m" target-dir="src/ios" />
+      <source-file src="src/ios/RongCloudLibPlugin.m" target-dir="src/ios" />
+      <source-file src="src/ios/RongCloudModel.m" target-dir="src/ios" />
+      <source-file src="src/ios/libopencore-amrnb.a" framework="true" />
 
-      <resource-file src="src/ios/RCConfig.plist"/>
+      <resource-file src="src/ios/RCConfig.plist" />
 
-      <framework custom="true" src="src/ios/RongIMLib.framework"/>
-      <framework src="AssetsLibrary.framework"/>
-      <framework src="ImageIO.framework"/>
-      <framework src="MapKit.framework"/>
-      <framework src="CoreLocation.framework"/>
-      <framework src="SystemConfiguration.framework"/>
-      <framework src="QuartzCore.framework"/>
-      <framework src="OpenGLES.framework"/>
-      <framework src="CoreVideo.framework"/>
-      <framework src="CoreTelephony.framework"/>
-      <framework src="CoreMedia.framework"/>
-      <framework src="CoreAudio.framework"/>
-      <framework src="CFNetwork.framework"/>
-      <framework src="AudioToolbox.framework"/>
-      <framework src="AVFoundation.framework"/>
-      <framework src="UIKit.framework"/>
-      <framework src="CoreGraphics.framework"/>
-      <framework src="libxml2.dylib"/>
-      <framework src="libz.dylib"/>
-      <framework src="libstdc++.dylib"/>
-      <framework src="libsqlite3.dylib"/>
-      <framework src="libc++.dylib"/>
-      <framework src="libc++abi.dylib"/>
+      <framework src="src/ios/RongIMLib.framework" custom="true" />
+      <framework src="AssetsLibrary.framework" />
+      <framework src="ImageIO.framework" />
+      <framework src="MapKit.framework" />
+      <framework src="CoreLocation.framework" />
+      <framework src="SystemConfiguration.framework" />
+      <framework src="QuartzCore.framework" />
+      <framework src="OpenGLES.framework" />
+      <framework src="CoreVideo.framework" />
+      <framework src="CoreTelephony.framework" />
+      <framework src="CoreMedia.framework" />
+      <framework src="CoreAudio.framework" />
+      <framework src="CFNetwork.framework" />
+      <framework src="AudioToolbox.framework" />
+      <framework src="AVFoundation.framework" />
+      <framework src="UIKit.framework" />
+      <framework src="CoreGraphics.framework" />
+      <framework src="libxml2.dylib" />
+      <framework src="libz.dylib" />
+      <framework src="libstdc++.dylib" />
+      <framework src="libsqlite3.dylib" />
+      <framework src="libc++.dylib" />
+      <framework src="libc++abi.dylib" />
     </platform>
   </plugin>

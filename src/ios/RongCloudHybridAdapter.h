@@ -108,4 +108,5 @@
 
 - (void)getNotificationQuietHours:(id)callbackId;
 
+- (void)disableLocalNotification:(id)callbackId;
 @end

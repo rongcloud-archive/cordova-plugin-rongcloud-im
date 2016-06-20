@@ -11,23 +11,34 @@
 //  Created by Heq.Shinoda on 14-6-13.
 
 #import "RCMessageContent.h"
+
+/*!
+ 文本消息的类型名
+ */
 #define RCTextMessageTypeIdentifier @"RC:TxtMsg"
-/**
- *  文本消息类定义
+
+/*!
+ 文本消息类
+ 
+ @discussion 文本消息类，此消息会进行存储并计入未读消息数。
  */
 @interface RCTextMessage : RCMessageContent <NSCoding>
-/** 文本消息内容 */
+
+/*!
+ 文本消息的内容
+ */
 @property(nonatomic, strong) NSString *content;
 
-/**
- *  附加信息
+/*!
+ 文本消息的附加信息
  */
 @property(nonatomic, strong) NSString *extra;
 
-/**
- *  根据参数创建文本消息对象
- *
- *  @param content  文本消息内容
+/*!
+ 初始化文本消息
+ 
+ @param content 文本消息的内容
+ @return        文本消息对象
  */
 + (instancetype)messageWithContent:(NSString *)content;
 

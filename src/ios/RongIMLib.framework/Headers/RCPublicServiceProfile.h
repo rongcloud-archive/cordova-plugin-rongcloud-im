@@ -15,75 +15,105 @@
 #import "RCStatusDefine.h"
 #import "RCPublicServiceMenu.h"
 
-/**
- * 公众服务账号信息
+/*!
+ 公众服务账号信息
  */
 @interface RCPublicServiceProfile : NSObject
-/**
- * 公众服务账号名称
+
+/*!
+ 公众服务账号的名称
  */
 @property(nonatomic, strong) NSString *name;
-/**
- * 公众服务账号描述
+
+/*!
+ 公众服务账号的描述
  */
 @property(nonatomic, strong) NSString *introduction;
-/**
- * 公众服务账号的userID
+
+/*!
+ 公众服务账号的ID
  */
 @property(nonatomic, strong) NSString *publicServiceId;
-/**
- * 公众服务账号头像Url
+
+/*!
+ 公众服务账号头像URL
  */
 @property(nonatomic, strong) NSString *portraitUrl;
-/**
- * 公众服务账号主体. 当前版本暂不支持.
+
+/*!
+ 公众服务账号的所有者
+ 
+ @discussion 当前版本暂不支持。
  */
 @property(nonatomic, strong) NSString *owner;
-/**
- * 公众服务账号主体Url. 当前版本暂不支持.
+
+/*!
+ 公众服务账号所有者的URL
+ 
+ @discussion 当前版本暂不支持。
  */
 @property(nonatomic, strong) NSString *ownerUrl;
-/**
- * 公众服务账号的电话号码. 当前版本暂不支持.
+
+/*!
+ 公众服务账号的联系电话
+ 
+ @discussion 当前版本暂不支持。
  */
 @property(nonatomic, strong) NSString *publicServiceTel;
-/**
- * 公众服务账号历史消息. 当前版本暂不支持.
+
+/*!
+ 公众服务账号历史消息
+ 
+ @discussion 当前版本暂不支持。
  */
 @property(nonatomic, strong) NSString *histroyMsgUrl;
-/**
- * 公众服务账号地理位置. 当前版本暂不支持.
+
+/*!
+ 公众服务账号地理位置
+ 
+ @discussion 当前版本暂不支持。
  */
 @property(nonatomic, strong) CLLocation *location;
-/**
- * 公众服务账号经营范围. 当前版本暂不支持.
+
+/*!
+ 公众服务账号经营范围
+ 
+ @discussion 当前版本暂不支持。
  */
 @property(nonatomic, strong) NSString *scope;
-/**
- * 公众服务账号类型
+
+/*!
+ 公众服务账号类型
  */
 @property(nonatomic) RCPublicServiceType publicServiceType;
-/**
- * 是否关注该公众服务账号
+
+/*!
+ 是否关注该公众服务账号
  */
 @property(nonatomic, getter=isFollowed) BOOL followed;
-/**
- * 公众服务账号菜单
+
+/*!
+ 公众服务账号菜单
  */
 @property(nonatomic, strong) RCPublicServiceMenu *menu;
-/**
- * 公众服务账号的全局属性
+
+/*!
+ 公众服务账号的全局属性
+ 
+ @discussion 此公众服务账号是否设置为所有用户均关注。
  */
 @property(nonatomic, getter=isGlobal) BOOL global;
 
-/**
- *  公众服务账号信息的json数据
+/*!
+ 公众服务账号信息的json数据
  */
 @property(nonatomic, strong) NSDictionary *jsonDict;
-/**
- * 根据JSON 字典创建公众服务账号实体
- *
- * @param  jsonContent   存储公众服务账号属性的字典
+
+/*!
+ 初始化公众服务账号信息
+ 
+ @param jsonContent    公众藏獒信息的json数据
  */
 - (void)initContent:(NSString *)jsonContent;
+
 @end

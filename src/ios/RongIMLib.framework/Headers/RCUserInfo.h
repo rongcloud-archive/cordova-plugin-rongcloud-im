@@ -12,23 +12,36 @@
 
 #import <Foundation/Foundation.h>
 
-/**
- *  用户信息类
+/*!
+ 用户信息类 
  */
 @interface RCUserInfo : NSObject <NSCoding>
-/** 用户ID */
+
+/*!
+ 用户ID
+ */
 @property(nonatomic, strong) NSString *userId;
-/** 用户名*/
+
+/*!
+ 用户名称
+ */
 @property(nonatomic, strong) NSString *name;
-/** 头像URL*/
+
+/*!
+ 用户头像的URL
+ */
 @property(nonatomic, strong) NSString *portraitUri;
 
-/**
- *  指派的初始化方法，根据给定字段初始化实例
- *
- *  @param userId       用户ID
- *  @param username     用户名
- *  @param portrait     头像URL
+/*!
+ 用户信息的初始化方法
+ 
+ @param userId      用户ID
+ @param username    用户名称
+ @param portrait    用户头像的URL
+ @return            用户信息对象
  */
-- (instancetype)initWithUserId:(NSString *)userId name:(NSString *)username portrait:(NSString *)portrait;
+- (instancetype)initWithUserId:(NSString *)userId
+                          name:(NSString *)username
+                      portrait:(NSString *)portrait;
+
 @end

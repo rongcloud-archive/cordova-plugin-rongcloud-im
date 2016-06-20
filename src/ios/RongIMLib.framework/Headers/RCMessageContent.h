@@ -17,71 +17,111 @@
 #import "RCStatusDefine.h"
 #import "RCUserInfo.h"
 
-/**
- *  @protocol RCMessageCoding
- *  用于 @class RCMessageContent 的派生类实现具体消息内容编解码
+/*!
+ 消息内容的编解码协议
+ 
+ @discussion 用于标示消息内容的类型，进行消息的编码和解码。
+ 所有自定义消息必须实现此协议，否则将无法正常传输和使用。
  */
 @protocol RCMessageCoding <NSObject>
 @required
-/**
- *  编码将当前对象转成JSON数据
- *  @return 编码后的JSON数据
+
+/*!
+ 将消息内容序列化，编码成为可传输的json数据
+ 
+ @discussion 消息内容通过此方法，将消息中的所有数据，编码成为json数据，返回的json数据将用于网络传输。
  */
 - (NSData *)encode;
 
-/**
- *  根据给定的JSON数据设置当前实例
- *  @param data 传入的JSON数据
+/*!
+ 将json数据的内容反序列化，解码生成可用的消息内容
+ 
+ @param data    消息中的原始json数据
+ 
+ @discussion 网络传输的json数据，会通过此方法解码，获取消息内容中的所有数据，生成有效的消息内容。
  */
 - (void)decodeWithData:(NSData *)data;
 
-/**
- *  应返回消息名称，此字段需个平台保持一致
- *  @return 消息体名称
+/*!
+ 返回消息的类型名
+ 
+ @return 消息的类型名
+ 
+ @discussion 您定义的消息类型名，需要在各个平台上保持一致，以保证消息互通。
+ 
+ @warning 请勿使用@"RC:"开头的类型名，以免和SDK默认的消息名称冲突
  */
 + (NSString *)getObjectName;
 
 @end
 
-/**
- *  @protocol RCMessagePersistentCompatible
- *  RCMessageContent 已经实现此协议方法，派生类需按照自己需求重新覆盖实现，
+/*!
+ 消息内容的存储协议
+ 
+ @discussion 用于确定消息内容的存储策略。
+ 所有自定义消息必须实现此协议，否则将无法正常存储和使用。
  */
 @protocol RCMessagePersistentCompatible <NSObject>
 @required
-/**
- *  返回遵循此protocol的类对象持久化的标识
- *
- *  @return 返回持久化设定标识
- *   @discussion   默认实现返回 @const (MessagePersistent_ISPERSISTED |
- *  MessagePersistent_ISCOUNTED)
+
+/*!
+ 返回消息的存储策略
+ 
+ @return 消息的存储策略
+ 
+ @discussion 指明此消息类型在本地是否存储、是否计入未读消息数。
  */
 + (RCMessagePersistent)persistentFlag;
 @end
 
-/**
- *  消息体基类
- *
- *  @discussion 所有自定义消息需继承此类，并当实现其遵循的两个协议接口
+/*!
+ 消息内容摘要的协议
+ 
+ @discussion 用于在会话列表和本地通知中显示消息的摘要。
  */
-@interface RCMessageContent : NSObject <RCMessageCoding, RCMessagePersistentCompatible> {
-  @private
-    NSString *_targetId;
-}
+@protocol RCMessageContentView
+@optional
 
-/**
- *  发送者信息
+/*!
+ 返回在会话列表和本地通知中显示的消息内容摘要
+ 
+ @return 会话列表和本地通知中显示的消息内容摘要
+ 
+ @discussion 如果您使用IMKit，当会话的最后一条消息为自定义消息时，需要通过此方法获取在会话列表展现的内容摘要；
+ 当App在后台收到消息时，需要通过此方法获取在本地通知中展现的内容摘要。
+ */
+- (NSString *)conversationDigest;
+
+@end
+
+/*!
+ 消息内容的基类
+ 
+ @discussion 此类为消息实体类RCMessage中的消息内容content的基类。
+ 所有的消息内容均为此类的子类，包括SDK自带的消息（如RCTextMessage、RCImageMessage等）和用户自定义的消息。
+ 所有的自定义消息必须继承此类，并实现RCMessageCoding和RCMessagePersistentCompatible、RCMessageContentView协议。
+ */
+@interface RCMessageContent : NSObject <RCMessageCoding, RCMessagePersistentCompatible, RCMessageContentView>
+
+/*!
+ 消息内容中携带的发送者的用户信息
+ 
+ @discussion 如果您使用IMKit，可以通过RCIM的enableMessageAttachUserInfo属性设置在每次发送消息中携带发送者的用户信息。
  */
 @property(nonatomic, strong) RCUserInfo *senderUserInfo;
 
-/**
- *  decode用户信息
- *
- *  @param dictionary  用户信息字典
+/*!
+ 将消息内容中携带的用户信息解码
+ 
+ @param dictionary 用户信息的Dictionary
  */
 -(void)decodeUserInfo:(NSDictionary *)dictionary;
 
-/** 原始JSON数据，如果encode和decode失败，此基类会将服务器返回的JSON存到此字段
+/*!
+ 消息内容的原始json数据
+ 
+ @discussion 此字段存放消息内容中未编码的json数据。
+ SDK内置的消息，如果消息解码失败，默认会将消息的内容存放到此字段；如果编码和解码正常，此字段会置为nil。
  */
 @property(nonatomic, strong, setter=setRawJSONData:) NSData *rawJSONData;
 

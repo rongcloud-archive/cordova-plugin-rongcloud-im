@@ -13,35 +13,47 @@
 #import <Foundation/Foundation.h>
 #import "RCStatusDefine.h"
 
-/**
- * 公众服务账号菜单条目类
+/*!
+ 公众服务的菜单项
  */
 @interface RCPublicServiceMenuItem : NSObject
 
-/**
- * 菜单Id
+/*!
+ 菜单的ID
  */
 @property(nonatomic, strong) NSString *id;
-/**
- * 菜单标题
+
+/*!
+ 菜单的标题
  */
 @property(nonatomic, strong) NSString *name;
-/**
- * 菜单链接
+
+/*!
+ 菜单的URL链接
  */
 @property(nonatomic, strong) NSString *url;
-/**
- * 菜单类型
+
+/*!
+ 菜单的类型
  */
 @property(nonatomic) RCPublicServiceMenuItemType type;
-/**
- * 子菜单，类型RCPublicServiceMenuItem
+
+/*!
+ 菜单中的子菜单
+ 
+ @discussion 子菜单为RCPublicServiceMenuItem的数组
  */
 @property(nonatomic, strong) NSArray *subMenuItems;
-/**
- * 根据JSON Array创建菜单项Array
- * @param  jsonArray   存储菜单项属性字典的Array
- * @return 返回菜单项Array
+
+/*!
+ 将菜单项的json数组解码（已废弃，请勿使用）
+ 
+ @param jsonArray   由菜单项原始Json数据组成的数组
+ @return            公众服务菜单项RCPublicServiceMenuItem的数组
+ 
+ @warning **已废弃，请勿使用。**
  */
-+ (NSArray *)menuItemsFromJsonArray:(NSArray *)jsonArray;
++ (NSArray *)menuItemsFromJsonArray:(NSArray *)jsonArray
+__deprecated_msg("已废弃，请勿使用。");
+
 @end

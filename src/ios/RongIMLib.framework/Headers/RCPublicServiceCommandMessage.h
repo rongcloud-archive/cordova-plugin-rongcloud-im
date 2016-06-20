@@ -8,40 +8,51 @@
 
 #import "RCMessageContent.h"
 #import "RCPublicServiceMenuItem.h"
+
+/*!
+ 公众服务请求消息的类型名
+ */
 #define RCPublicServiceCommandMessageTypeIdentifier @"RC:PSCmd"
 
-
-/**
- * 该消息是用来在公众账号菜单请求信息使用。
- * 只能发送，接收不处理。
- * 不存储和计数
+/*!
+ 公众服务请求消息类
+ 
+ @discussion 公众服务请求消息类，此消息不存储，也不计入未读消息数。
+ 此消息仅用于客户端公共服务账号中的菜单，向服务器发送请求。
  */
 @interface RCPublicServiceCommandMessage : RCMessageContent
-/** 
- * 消息命令
+
+/*!
+ 请求的名称
  */
 @property(nonatomic, strong) NSString *command;
-/**
- * 消息内容
+
+/*!
+ 请求的内容
  */
 @property(nonatomic, strong) NSString *data;
-/**
- *  附加信息
+
+/*!
+ 请求的扩展数据
  */
 @property(nonatomic, strong) NSString *extra;
 
-/**
- *  根据参数创建公众号命令消息对象
- *
- *  @param item  公众账号菜单项
+/*!
+ 初始化公众服务请求消息
+ 
+ @param item    公众服务菜单项
+ @return        公众服务请求消息对象
  */
 + (instancetype)messageFromMenuItem:(RCPublicServiceMenuItem *)item;
 
-/**
- *  创建公众号命令消息对象
- *
- *  @param command  公众号命令
- *  @param data     公众号数据
+/*!
+ 初始化公众服务请求消息
+ 
+ @param command     请求的名称
+ @param data        请求的内容
+ @return            公众服务请求消息对象
  */
-+ (instancetype)messageWithCommand:(NSString *)command data:(NSString *)data;
++ (instancetype)messageWithCommand:(NSString *)command
+                              data:(NSString *)data;
+
 @end

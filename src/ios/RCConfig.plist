@@ -2,11 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Message_Read_Receipt</key>
-	<dict>
-		<key>isOpenMessageReceipt</key>
-		<false/>
-	</dict>
 	<key>Voice</key>
 	<dict>
 		<key>AudioEncodingBitRate</key>

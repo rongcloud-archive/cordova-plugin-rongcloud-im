@@ -11,42 +11,70 @@
 //  Created by Heq.Shinoda on 14-6-26.
 
 #import "RCMessageContent.h"
+
+/*!
+ 讨论组通知消息的类型名
+ */
 #define RCDiscussionNotificationTypeIdentifier @"RC:DizNtf"
 
-/**
- *  @enum RCDiscussionNotificationType
+/*!
+ 讨论组通知的类型
  */
 typedef NS_ENUM(NSInteger, RCDiscussionNotificationType) {
-    /** 加入讨论组通知类型 */
+    /*!
+     有成员加入讨论组的通知
+     */
     RCInviteDiscussionNotification = 1,
-    /**  退出讨论组通知类型 */
+    /*!
+     有成员退出讨论组的通知
+     */
     RCQuitDiscussionNotification,
-    /** 修改讨论组名称通知类型 */
+    /*!
+     讨论组名称发生变更的通知
+     */
     RCRenameDiscussionTitleNotification,
-    /** 移除讨论组成员通知类型 */
+    /*!
+     有成员被踢出讨论组的通知
+     */
     RCRemoveDiscussionMemberNotification,
-    /** 开关成员邀请通知类型 */
+    /*!
+     讨论组加入权限的变更
+     */
     RCSwichInvitationAccessNotification
 };
 
-/**
- *  讨论组通知类定义
+/*!
+ 讨论组通知消息类
+ 
+ @discussion 讨论组通知消息类，此消息会进行存储，但不计入未读消息数。
  */
 @interface RCDiscussionNotificationMessage : RCMessageContent <NSCoding>
-/** 通知类型 */
+
+/*!
+ 讨论组通知的类型
+ */
 @property(nonatomic, assign) RCDiscussionNotificationType type;
-/** 操作者ID */
+
+/*!
+ 操作者的用户ID
+ */
 @property(nonatomic, strong) NSString *operatorId;
-/** 扩展字段，用于存储服务器下发扩展信息 */
+
+/*!
+ 讨论组通知的扩展信息
+ */
 @property(nonatomic, strong) NSString *extension;
-/**
- *   根据字段创建新通知实例
- *
- *  @param type         讨论组通知类型
- *  @param operatorId   操作者ID
- *  @param extension    扩展字段，用于存储服务器下发扩展信息
+
+/*!
+ 初始化讨论组通知消息
+ 
+ @param type        讨论组通知的扩展信息
+ @param operatorId  操作者的用户ID
+ @param extension   讨论组通知的扩展信息
+ @return            讨论组通知对象
  */
 + (instancetype)notificationWithType:(RCDiscussionNotificationType)type
-operator:(NSString *)operatorId
+                            operator:(NSString *)operatorId
                            extension:(NSString *)extension;
+
 @end

@@ -69,4 +69,5 @@
 - (void)setNotificationQuietHours:(CDVInvokedUrlCommand *)command;
 - (void)removeNotificationQuietHours:(CDVInvokedUrlCommand *)command;
 - (void)getNotificationQuietHours:(CDVInvokedUrlCommand *)command;
+- (void)disableLocalNotification:(CDVInvokedUrlCommand *)command;
 @end

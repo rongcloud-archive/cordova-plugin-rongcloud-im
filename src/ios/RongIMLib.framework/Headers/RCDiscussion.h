@@ -15,34 +15,63 @@
 
 #import <Foundation/Foundation.h>
 
-/**
-    讨论组类定义
+/*!
+ 讨论组类
  */
 @interface RCDiscussion : NSObject
-/** 讨论组ID */
+
+/*!
+ 讨论组ID
+ */
 @property(nonatomic, strong) NSString *discussionId;
-/** 讨论组名称 */
+
+/*!
+ 讨论组名称
+ */
 @property(nonatomic, strong) NSString *discussionName;
-/** 创建讨论组用户ID */
+
+/*!
+ 讨论组的创建者的用户ID
+ */
 @property(nonatomic, strong) NSString *creatorId;
-/** 会话类型 */
-@property(nonatomic, assign) int conversationType;
-/** 讨论组成员ID列表 */
+
+/*!
+ 讨论组成员的用户ID列表
+ */
 @property(nonatomic, strong) NSArray *memberIdList;
-/** 是否开放成员邀请 0表示开放，1表示关闭 */
+
+/*!
+ 讨论组是否开放加人权限
+ 
+ @discussion 是否允许非创建者添加用户，0表示允许，1表示不允许，默认值为0。
+ */
 @property(nonatomic, assign) int inviteStatus;
-/** 是否推送消息通知 0表示开放，1表示关闭 */
-@property(nonatomic, assign) int pushMessageNotificationStatus;
-/**
- *  指派的初始化方法
- *
- *  @param discussionId                     讨论组ID
- *  @param discussionName                   讨论组名称
- *  @param creatorId                        创建者ID
- *  @param conversationType                 会话类型
- *  @param memberIdList                     成员ID列表
- *  @param inviteStatus                     是否开放成员邀请:0表示开放,1表示关闭
- *  @param pushMessageNotificationStatus    是否推送消息通知:0表示开放,1表示关闭
+
+/*!
+ 讨论组的会话类型（已废弃，请勿使用）
+ 
+ @warning **已废弃，请勿使用。**
+ */
+@property(nonatomic, assign) __deprecated_msg("已废弃，请勿使用。") int conversationType;
+
+/*!
+ 讨论组是否允许消息提醒（已废弃，请勿使用）
+ 
+ @warning **已废弃，请勿使用。**
+ */
+@property(nonatomic, assign) __deprecated_msg("已废弃，请勿使用。") int pushMessageNotificationStatus;
+
+/*!
+ 讨论组初始化方法
+ 
+ @param discussionId                    讨论组ID
+ @param discussionName                  讨论组名称
+ @param creatorId                       创建者的用户ID
+ @param conversationType                会话类型
+ @param memberIdList                    讨论组成员的用户ID列表
+ @param inviteStatus                    是否开放加人权限
+ @param pushMessageNotificationStatus   是否允许消息提醒
+ @return                                讨论组对象
  */
 - (instancetype)initWithDiscussionId:(NSString *)discussionId
                       discussionName:(NSString *)discussionName
@@ -51,5 +80,6 @@
                         memberIdList:(NSArray *)memberIdList
                         inviteStatus:(int)inviteStatus
                msgNotificationStatus:(int)pushMessageNotificationStatus;
+
 @end
 #endif

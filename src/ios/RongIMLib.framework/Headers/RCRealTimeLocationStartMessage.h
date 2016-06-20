@@ -7,20 +7,30 @@
 //
 
 #import "RCMessageContent.h"
+
+/*!
+ 实时位置共享的发起消息的类型名
+ */
 #define RCRealTimeLocationStartMessageTypeIdentifier @"RC:RLStart"
 
-/**
- * 地理位置开始消息
+/*!
+ 实时位置共享的发起消息类
+ 
+ @discussion 实时位置共享的发起消息类，此消息会进行存储并计入未读消息数。
  */
 @interface RCRealTimeLocationStartMessage : RCMessageContent
-/**
- *  附加信息
+
+/*!
+ 发起消息的附加信息
  */
 @property(nonatomic, strong) NSString *extra;
-/**
- *  根据参数创建消息对象
- *
- *  @param content  消息内容
+
+/*!
+ 初始化实时位置共享的发起消息
+ 
+ @param extra   附加信息
+ @return        初始化实时位置共享的发起消息对象
  */
-+ (instancetype)messageWithExtra:(NSString *)content;
++ (instancetype)messageWithExtra:(NSString *)extra;
+
 @end

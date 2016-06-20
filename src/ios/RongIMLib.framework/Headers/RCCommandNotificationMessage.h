@@ -12,27 +12,39 @@
 
 #import "RCMessageContent.h"
 
+/*!
+ 命令提醒消息的类型名
+ */
 #define RCCommandNotificationMessageIdentifier @"RC:CmdNtf"
-/**
- *  命令消息类
+
+/*!
+ 命令提醒消息类
+ 
+ @discussion 命令消息类，此消息会进行存储，但不计入未读消息数。
+ 与RCCommandMessage的区别是，此消息会进行存储并在界面上显示。
  */
 @interface RCCommandNotificationMessage : RCMessageContent
-/**
- *  命令名。
+
+/*!
+ 命令提醒的名称
  */
 @property(nonatomic, strong) NSString *name;
-/**
- *  命令数据，可以为任意格式，如 JSON。
+
+/*!
+ 命令提醒消息的扩展数据
+ 
+ @discussion 命令提醒消息的扩展数据，可以为任意字符串，如存放您定义的json数据。
  */
 @property(nonatomic, strong) NSString *data;
-/**
- *  构造方法
- *
- *  @param name 命令名。
- *  @param data 命令数据，可以为任意格式，如 JSON。
- *
- *  @return 类实例
+
+/*!
+ 初始化命令提醒消息
+ 
+ @param name    命令的名称
+ @param data    命令的扩展数据
+ @return        命令提醒消息对象
  */
-+ (instancetype)notificationWithName:(NSString *)name data:(NSString *)data;
++ (instancetype)notificationWithName:(NSString *)name
+                                data:(NSString *)data;
 
 @end
