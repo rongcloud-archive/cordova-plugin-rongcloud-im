@@ -12,6 +12,11 @@
 #import "RongCloudApplicationHandler.h"
 #import <objc/runtime.h>
 
+#ifdef RC_SUPPORT_IMKIT
+#import <RongIMKit/RongIMKit.h>
+#import <RongCallKit/RongCallKit.h>
+#endif
+
 #define BAD_PARAMETER_CODE -10002
 #define BAD_PARAMETER_MSG @"Argument Exception"
 
@@ -64,9 +69,12 @@ static BOOL isConnected = NO;
         
         return;
     }
-        
-    [[RCIMClient sharedRCIMClient] init:appKey];
-        
+    
+#ifdef RC_SUPPORT_IMKIT
+    [[RCIM sharedRCIM] initWithAppKey:appKey];
+#else
+    [[RCIMClient sharedRCIMClient] initWithAppKey:appKey];
+#endif
     isInited = YES;
         
     NSDictionary *_result = @{@"status":SUCCESS};
@@ -97,15 +105,19 @@ static BOOL isConnected = NO;
         return;
     }
 
-    
-    [[RCIMClient sharedRCIMClient]connectWithToken:token success:^(NSString *userId) {
+#ifdef RC_SUPPORT_IMKIT
+#else
+#endif
+    void (^successBlock)(NSString *userId) = ^(NSString *userId){
         NSLog(@"%s", __FUNCTION__);
         isConnected           = YES;
         NSDictionary *_result = @{@"status": SUCCESS, @"result": @{@"userId":userId}};
-
+        
         [self.commandDelegate sendResult:_result error:nil withCallbackId:callbackId doDelete:YES];
-
-    } error:^(RCConnectErrorCode status) {
+        
+    };
+    
+    void (^errorBlock)(RCConnectErrorCode status) = ^(RCConnectErrorCode status) {
         NSLog(@"%s, errorCode> %ld", __FUNCTION__, (long)status);
         
         isConnected           = YES;
@@ -113,15 +125,23 @@ static BOOL isConnected = NO;
         NSDictionary *_err    = @{@"code":@(status), @"msg": @""};
         
         [self.commandDelegate sendResult:_result error:_err withCallbackId:callbackId doDelete:YES];
-    } tokenIncorrect:^{
+    };
+    
+    void (^tokenIncorrectBlock)() = ^{
         NSLog(@"%s, errorCode> %d", __FUNCTION__, 31004);
-
+        
         isConnected           = YES;
         NSDictionary *_result = @{@"status": ERROR};
         NSDictionary *_err    = @{@"code":@(31004), @"msg": @""};
         
         [self.commandDelegate sendResult:_result error:_err withCallbackId:callbackId doDelete:YES];
-    }];
+    };
+    
+#ifdef RC_SUPPORT_IMKIT
+    [[RCIM sharedRCIM] connectWithToken:token success:successBlock error:errorBlock tokenIncorrect:tokenIncorrectBlock];
+#else
+    [[RCIMClient sharedRCIMClient] connectWithToken:token success:successBlock error:errorBlock tokenIncorrect:tokenIncorrectBlock];
+#endif
 }
 
 
@@ -1892,4 +1912,10 @@ static BOOL isConnected = NO;
     NSDictionary *_result = @{@"status": SUCCESS};
     [self.commandDelegate sendResult:_result error:nil withCallbackId:callbackId doDelete:YES];
 }
+
+#ifdef RC_SUPPORT_IMKIT
+- (void)startSingleCall:(NSString *)calleeId mediaType:(int)mediaType withCallBackId:(id)cbId {
+    [[RCCall sharedRCCall] startSingleCall:calleeId mediaType:(RCCallMediaType)mediaType];
+}
+#endif
 @end

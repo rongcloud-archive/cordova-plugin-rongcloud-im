@@ -16,5 +16,10 @@
 		<key>ImageHeight</key>
 		<integer>960</integer>
 	</dict>
+	<key>CustomerService</key>
+	<dict>
+		<key>SuspendWhenLeave</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

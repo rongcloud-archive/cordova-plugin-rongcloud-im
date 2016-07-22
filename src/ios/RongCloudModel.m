@@ -146,7 +146,8 @@
     }else if ([oldValue isEqualToString:@"CUSTOMER_SERVICE"])
     {
         newConversationType = ConversationType_CUSTOMERSERVICE;
-    }else if ([oldValue isEqualToString:@"system"])
+    }else if ([oldValue isEqualToString:@"SYSTEM"] ||
+              [oldValue isEqualToString:@"system"]) //小写的system是为了兼容历史遗留问题。
     {
         newConversationType = ConversationType_SYSTEM;
     }

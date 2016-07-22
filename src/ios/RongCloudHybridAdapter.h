@@ -109,4 +109,9 @@
 - (void)getNotificationQuietHours:(id)callbackId;
 
 - (void)disableLocalNotification:(id)callbackId;
+
+#ifdef RC_SUPPORT_IMKIT
+- (void)startSingleCall:(NSString *)calleeId mediaType:(int)mediaType withCallBackId:(id)cbId;
+#endif
+
 @end
