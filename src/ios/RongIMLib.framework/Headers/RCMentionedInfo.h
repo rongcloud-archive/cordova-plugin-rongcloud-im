@@ -24,12 +24,17 @@
 
  @discussion 如果type是@所有人，则可以传nil
  */
-@property(nonatomic, assign) NSArray *userIdList;
+@property(nonatomic, strong) NSArray *userIdList;
 
 /*!
  包含@提醒的消息，本地通知和远程推送显示的内容
  */
-@property(nonatomic, assign) NSString *mentionedContent;
+@property(nonatomic, strong) NSString *mentionedContent;
+
+/*!
+ 是否@了我
+ */
+@property(nonatomic, readonly) BOOL isMentionedMe;
 
 /*!
  初始化@提醒信息

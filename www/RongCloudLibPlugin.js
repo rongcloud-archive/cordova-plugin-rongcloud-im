@@ -380,5 +380,9 @@ RongCloudLibPlugin.prototype.removeNotificationQuietHours = function(retCallback
 RongCloudLibPlugin.prototype.getNotificationQuietHours = function(retCallback) {
     cordova.exec(function(ret){retCallback(ret)}, function(err){retCallback(null, err)}, "RongCloudLibPlugin","getNotificationQuietHours", []);
 };
+RongCloudLibPlugin.prototype.disableLocalNotification = function(retCallback) {
+    cordova.exec(function(ret){retCallback(ret)}, function(err){retCallback(null, err)}, "RongCloudLibPlugin","disableLocalNotification", []);
+};
+
 
 module.exports = new RongCloudLibPlugin();

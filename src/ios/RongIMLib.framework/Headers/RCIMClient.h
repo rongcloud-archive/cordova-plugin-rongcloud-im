@@ -833,6 +833,19 @@ FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
                            error:(void (^)(RCErrorCode status))errorBlock;
 
 /*!
+ 获取会话中@提醒自己的消息
+ 
+ @param conversationType    会话类型
+ @param targetId            目标会话ID
+ 
+ @discussion
+ 此方法从本地获取被@提醒的消息(最多返回10条信息)
+ @warning 使用 IMKit 注意在进入会话页面前调用，否则在进入会话清除未读数的接口 clearMessagesUnreadStatus: targetId:
+ 以及 设置消息接收状态接口 setMessageReceivedStatus:receivedStatus:会同步清除被提示信息状态。
+ */
+- (NSArray *)getUnreadMentionedMessages:(RCConversationType)conversationType
+                               targetId:(NSString *)targetId;
+/*!
  获取消息的发送时间（Unix时间戳、毫秒）
 
  @param messageId   消息ID
