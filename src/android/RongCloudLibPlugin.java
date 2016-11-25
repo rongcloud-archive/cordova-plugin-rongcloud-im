@@ -202,6 +202,7 @@ public class RongCloudLibPlugin extends CordovaPlugin {
             String appkey = args.getString(0);
             RongIMClient.init(mContext, appkey);
             RongPushInterface.init(mContext, appkey);
+            mRongClient = RongIMClient.getInstance();
             mInitialized = true;
             callModuleSuccess(callbackContext);
         } catch (JSONException e) {
@@ -217,7 +218,7 @@ public class RongCloudLibPlugin extends CordovaPlugin {
 
         try {
             String token = args.getString(0);
-            mRongClient = RongIMClient.connect(token, new RongIMClient.ConnectCallback() {
+            RongIMClient.connect(token, new RongIMClient.ConnectCallback() {
                 @Override
                 public void onTokenIncorrect() {
                     callModuleError(callbackContext, new RongException(31004));
